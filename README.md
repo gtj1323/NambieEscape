@@ -17,7 +17,7 @@
 6. DB모델 migrate
      `python manage.py migrate`
 7. 관리자 생성
-python manage.py createsuperuser
+     `python manage.py createsuperuser`
    관리자의 pk=1 이 되도록 먼저.
    관리자 ID : admin
    관리자 PW : admin

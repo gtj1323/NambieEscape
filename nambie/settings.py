@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     # third app
     'django_extensions',
     'bootstrap4',
+
+    'django_telegram_login',
+
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',
@@ -52,6 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+TELEGRAM_BOT_NAME = 'Nambie_Prac_bot' # 'django_telegram_login_bot'
+TELEGRAM_BOT_TOKEN = '617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI'
+TELEGRAM_LOGIN_REDIRECT_URL = 'https://polite-deer-82.localtunnel.me'
+# 617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI
 # SITE_ID = 1
 
 MIDDLEWARE = [

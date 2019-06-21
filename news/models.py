@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser # 커스텀 유저 모델
 class Category(models.Model):
     name = models.TextField()
     inter_users = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name="like_cate", blank=True)
+    
     def __str__(self):
         return self.name
 
@@ -20,6 +21,7 @@ class News(models.Model):
     title = models.TextField()
     content = models.TextField()
     URL = models.TextField()
+    date = models.IntegerField()
     keyword = models.ForeignKey(Keyword, on_delete = models.CASCADE)
 
     def __str__(self):
