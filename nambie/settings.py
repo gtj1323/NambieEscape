@@ -25,7 +25,7 @@ SECRET_KEY = 'pmv#bdjht^5!2xe=2gltj!r40kgojpg-za4blhvnnum^!m17rs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['5e12d9a1.ngrok.io']
 
 
 # Application definition
@@ -56,9 +56,9 @@ INSTALLED_APPS = [
 ]
 
 TELEGRAM_BOT_NAME = 'Nambie_Prac_bot' # 'django_telegram_login_bot'
-TELEGRAM_BOT_TOKEN = '617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI'
-TELEGRAM_LOGIN_REDIRECT_URL = 'https://polite-deer-82.localtunnel.me'
-# 617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI
+TELEGRAM_BOT_TOKEN = ''
+TELEGRAM_LOGIN_REDIRECT_URL = 'https://5e12d9a1.ngrok.io/' # 'https://5e12d9a1.ngrok.io/' 'http://127.0.0.1:8000'
+
 # SITE_ID = 1
 
 MIDDLEWARE = [
