@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
-<p>로그인</p>
+{% extends 'base.html' %}
 
-{% autoescape off %} {{ telegram_login_widget }} {% endautoescape %}
-</body>
-</html>
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+    {% autoescape off %} {{ telegram_login_widget }} {% endautoescape %}
+{% endblock content %}

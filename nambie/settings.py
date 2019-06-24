@@ -25,8 +25,11 @@ SECRET_KEY = 'pmv#bdjht^5!2xe=2gltj!r40kgojpg-za4blhvnnum^!m17rs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['5e12d9a1.ngrok.io']
+ALLOWED_HOSTS = ['55a0dc38.ngrok.io']
 
+TELEGRAM_BOT_NAME = 'Nambie_Prac_bot' # 'django_telegram_login_bot'
+TELEGRAM_BOT_TOKEN = '617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI'
+TELEGRAM_LOGIN_REDIRECT_URL = '' # 'http://127.0.0.1:8000'
 
 # Application definition
 
@@ -41,12 +44,7 @@ INSTALLED_APPS = [
     'bootstrap4',
 
     'django_telegram_login',
-
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.telegram',
-
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,10 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
-TELEGRAM_BOT_NAME = 'Nambie_Prac_bot' # 'django_telegram_login_bot'
-TELEGRAM_BOT_TOKEN = ''
-TELEGRAM_LOGIN_REDIRECT_URL = 'https://5e12d9a1.ngrok.io/' # 'https://5e12d9a1.ngrok.io/' 'http://127.0.0.1:8000'
 
 # SITE_ID = 1
 
@@ -76,7 +70,7 @@ ROOT_URLCONF = 'nambie.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Nambie', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

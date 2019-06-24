@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Keyword, News, Comment
+from .models import Category, Keyword, KeyNews, RankNews, Comment
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -10,9 +10,13 @@ class KeywordAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'category',]
 admin.site.register(Keyword, KeywordAdmin)
 
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'URL', 'keyword', 'date',]
-admin.site.register(News, NewsAdmin)
+class KeyNewsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'url', 'keyword', 'date',]
+admin.site.register(KeyNews, KeyNewsAdmin)
+
+class RankNewsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'url', 'category', 'date',]
+admin.site.register(RankNews, RankNewsAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['id', 'date', 'user', 'keyword',]
