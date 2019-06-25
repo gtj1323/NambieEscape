@@ -11,6 +11,7 @@ class Event(models.Model):
     
     class Meta:
         ordering = ('-pk',)
+
     @property
     def get_html_url(self):
         url = reverse('calendar:edit', args=(self.id,))

@@ -25,7 +25,7 @@ SECRET_KEY = 'pmv#bdjht^5!2xe=2gltj!r40kgojpg-za4blhvnnum^!m17rs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['55a0dc38.ngrok.io']
+ALLOWED_HOSTS = ['5d4ce3f1.ngrok.io']
 
 TELEGRAM_BOT_NAME = 'Nambie_Prac_bot' # 'django_telegram_login_bot'
 TELEGRAM_BOT_TOKEN = '617081935:AAECEcav6WugCo39g4MUTUgFYU0rYIMT4gI'
@@ -70,7 +70,7 @@ ROOT_URLCONF = 'nambie.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Nambie', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'nambie', 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +82,9 @@ TEMPLATES = [
         },
     },
 ]
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'nambie', 'static'),
+]
 # AUTHENTICATION_BACKENDS = (
 #     # Needed to login by username in Django admin, regardless of `allauth`
 #     'django.contrib.auth.backends.ModelBackend',
