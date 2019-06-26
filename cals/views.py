@@ -8,10 +8,15 @@ from .utils import *
 import calendar
 from .forms import *
 from django.urls import reverse
-from pprint import pprint
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.core import serializers
 import json
+
+from django.conf import settings
+import requests
+bot_token = settings.TELEGRAM_BOT_TOKEN
 
 def my_calendar(request, month = None):
     if month:
@@ -27,7 +32,7 @@ def my_calendar(request, month = None):
             d = date(year, month, day=1)
             
     cal = Calendar(d.year, d.month)
-    html_cal, month_name = cal.formatmonth(withyear=True)
+    html_cal, month_name = cal.formatmonth(request, withyear=True)
     form = EventForm()
     context = {
         'form': form,
@@ -39,33 +44,37 @@ def my_calendar(request, month = None):
     
     return render(request, 'cals/calendar.html', context)
 
+@require_POST
+@login_required
 def edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    if request.method == 'POST':
+    if event.user == request.user:
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
     return redirect('calendar:calendar')
 
-
+@require_POST
 def create(request, year, month, day):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
         title = request.POST.get('title')
         description = request.POST.get('description')
         title_type = request.POST.get('title_type')
-        
+        user = request.user
         temp = f'{year}-{month}-{day}'
         uploaded_at = datetime.strptime(temp, '%Y-%m-%d')
-        event = Event(title = title, description = description, title_type = title_type, uploaded_at=uploaded_at)
+        event = Event(title = title, description = description, title_type = title_type, uploaded_at=uploaded_at, user=user)
         event.save()
+        
+        return redirect('calendar:calendar')
     else:
-        print("GET 방식의 HTTP 요청, POST 방식이여야 함")
-    return redirect('calendar:calendar')
+        return redirect('accounts:login')
 
+@login_required
 def detail(request, year, month, day):
-    cur_temps = Event.objects.filter(uploaded_at__year=year, uploaded_at__month=month, uploaded_at__day=day)
+    cur_temps = request.user.event_set.filter(uploaded_at__year=year, uploaded_at__month=month, uploaded_at__day=day)
     cur_dates = serializers.serialize('json', cur_temps)
-    all_temps = Event.objects.filter(uploaded_at__month=month, uploaded_at__day=day)
+    all_temps = request.user.event_set.filter(uploaded_at__month=month, uploaded_at__day=day)
     all_dates = serializers.serialize('json', all_temps)
     context = {
         'cur_dates': cur_dates,
@@ -73,11 +82,12 @@ def detail(request, year, month, day):
          }
     return JsonResponse(context)
 
+@login_required
 def delete(request, content_id):
-    contents = get_object_or_404(Event, pk=content_id)
+    contents = get_object_or_404(Event, pk=content_id, user_id=request.user.pk)
     contents.delete()
     return redirect('calendar:calendar')
-  
+
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
@@ -96,6 +106,19 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = str(next_month.year) + '-' + str(next_month.month)
     return month
+
+def get_today_events(request):
+    d = datetime.today()
+    for user in User.objects.all():
+        today_events = Event.objects.filter(uploaded_at__month=d.month, uploaded_at__day=d.day, user_id=user.pk)
+        text='Remember the today./n'
+        lastin = len(today_events)
+        for today_event in today_events:
+            if today_event == today_events[lastin-1]:
+                text+=f'{today_event.title}가 있습니다.'
+            else:
+                text+=f'{today_event.title}, '
+        requests.get(f'https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={user.tel_id}&text={text}')
 
 '''
 # modelForm 적용 create 

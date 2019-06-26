@@ -81,18 +81,10 @@ def edit_cate(request, category_pk):
         user = request.user
         if category.inter_users.filter(pk=user.pk).exists():
             category.inter_users.remove(user)
-            inter = False
-            print('삭제')
         else:
             category.inter_users.add(user)
-            inter = True
-            print('추가')
-        context = {
-            'inter': inter,
-        }
-        return JsonResponse(context)
+        return JsonResponse()
     return HttpResponseBadRequest()
-
 
 
 ###########################################################################

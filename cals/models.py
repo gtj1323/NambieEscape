@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 class Event(models.Model):
     title = models.CharField(max_length=100)
@@ -8,7 +9,8 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     uploaded_at = models.DateTimeField(blank=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     class Meta:
         ordering = ('-pk',)
 

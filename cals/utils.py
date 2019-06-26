@@ -4,6 +4,7 @@ from .models import Event
 from django.forms import ModelForm, DateInput
 from django.utils.dateparse import parse_date
 from pprint import pprint
+from accounts.models import User
 
 class Calendar(TextCalendar):
 	def __init__(self, year=None, month=None):
@@ -45,8 +46,12 @@ class Calendar(TextCalendar):
 
 	# formats a month as a table
 	# filter events by year and month
-	def formatmonth(self, withyear=True):
-		events = Event.objects.filter(uploaded_at__year=self.year, uploaded_at__month=self.month)
+	def formatmonth(self, request, withyear=True):
+		if request.user.is_authenticated:
+			events = request.user.event_set.all().filter(uploaded_at__year=self.year, uploaded_at__month=self.month)
+		else : 
+			events = User.objects.get(pk=4).event_set.filter(uploaded_at__year=self.year, uploaded_at__month=self.month)
+			# events = Event()
 		month_name = self.formatmonthname(self.year, self.month, width=0, withyear=withyear)
 		cal = ''
 		for week in self.monthdays2calendar(self.year, self.month):

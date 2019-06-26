@@ -28,9 +28,19 @@
 </table>
 
 <!-- The Modal for inserting date -->
+{% if request.user.is_authenticated  %}
 {% include "cals/_modal_1.html" %}
 
 <!-- The Modal for displaying all data -->
 {% include "cals/_modal_2.html" %}
-
+{% else %}
+<script>
+	const checkBoxes = document.querySelectorAll('.date')
+    checkBoxes.forEach( checkBox => {
+        checkBox.addEventListener('click', function(event) {
+					location.href = "/accounts/login/"
+			})
+	})
+</script>
+{% endif %}
 {% endblock %}
